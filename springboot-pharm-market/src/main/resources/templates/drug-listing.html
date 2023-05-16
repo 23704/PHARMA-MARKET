@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>PHARMA-MARKET</title>
+	<style>
+		body {
+			margin: 0;
+			background-image: url('https://c1.wallpaperflare.com/preview/839/207/808/pill-tablet-pharmacy-medicine.jpg');
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+		h1 {
+			font-family: Arial, sans-serif;
+			font-size: 48px;
+			font-weight: bold;
+			color: #fff;
+			padding: 30px 0 0;
+			text-align: center;
+    
+		}
+		form {
+			margin: 20px auto;
+			text-align: center;
+		}
+		table {
+			margin: 20px auto;
+			border-collapse: collapse;
+			width: 80%;
+			background-color: #ffff;
+		}
+		th, td {
+			padding: 15px;
+			text-align: center;
+		}
+		th {
+			background-color: #007bff;
+			color: #fff;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		img {
+			max-width: 100px;
+			max-height: 100px;
+		}
+		button {
+			margin-top: 10px;
+			background-color: #007bff;
+			border: none;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>PHARMA-MARKET</h1>
+	<form method="post" action="/logout">
+		<button type="submit" th:href="@{/home/dashboard}">Logout</button>
+	</form>
+	<form th:action="@{/drugs/page/1}">
+		Filter: <input type="text" name="key" th:value="${key}" required/>
+		<button type="submit">Search</button>
+		<input type="button" value="Clear" onclick="clearFilter()"/>
+	</form>
+	<table>
+		<thead>
+			<tr>
+				<th>Drug Name</th>
+				<th>Description</th>
+				<th>Category</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Manufacture Date</th>
+				<th>Expiration Date</th>
+				<th>Picture</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="pharmacy : ${theDrugs}">
+				<td th:text="${pharmacy.drugName}"></td>
+				<td th:text="${pharmacy.description}"></td>
+				<td th:text="${pharmacy.category}"></td>
+				<td th:text="${pharmacy.price}"></td>
+				<td th:text="${pharmacy.quantity}"></td>
+				<td th:text="${pharmacy.fabDate}"></td>
+				<td th:text="${pharmacy.expDate}"></td>
+				<td><img class="img-fluid" th:src="@{/drugs/images/{filename}(filename=${pharmacy.drugImage})}" th:alt="${file}" style="max-width:100%; max-height:100%;"/></td>
+				<td>
+					<div>
+						<form th:action="@{/drugs/showFormForUpdate}"  method="post">
+							<input type="hidden" name="drugId" th:value="${pharmacy.id}" />
+							<button type="submit" class="btn btn-info btn-sm">Update</button>
+						</form>
+					</div>
+					<br/>
+					<div>
+						<form th:action="@{/drugs/deleteDrug}" method="post" onsubmit="return confirm('Are you sure you want to delete this Drug?')">
+							<input type="hidden" name="drugId" th:value="${pharmacy.id}" />
+							<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+						</form>
+
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="page-color">
+		<center>
+			Total Drugs: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+			&nbsp; &nbsp; - &nbsp; &nbsp;
+			<a th:if="${currentPage > 1}" th:href="@{/drugs/page/1}">First</a>
+			<span th:unless="${currentPage > 1}">First</span>
+			&nbsp;&nbsp;
+			<a th:if="${currentPage > 1}" th:href="@{'/drugs/page/' + ${currentPage - 1}}">Previous </a>
+			<span th:unless="${currentPage > 1}">Previous</span>
+			&nbsp; &nbsp;
+			<span th:each="i: ${#numbers.sequence(1, totalPages)}" th:if="${totalPages != 0}">
+    <a th:if="${i != currentPage}" th:href="@{'/drugs/page/' + ${i}}">[[${i}]]</a>
+    <span th:unless="${i != currentPage}">[[${i}]]</span>
+    &nbsp;&nbsp;
+</span>
+			<span th:each="i: ${#numbers.sequence(1, 1)}" th:if="${totalPages == 0}">
+    <a th:if="${i != currentPage}" th:href="@{'/drugs/page/' + ${i}}">[[${i}]]</a>
+    <span th:unless="${i != currentPage}">[[${i}]]</span>
+    &nbsp;&nbsp;
+</span>
+			<a th:if="${currentPage < totalPages}" th:href="@{'/drugs/page/' + ${currentPage + 1}}">Next</a>
+			<span th:unless="${currentPage < totalPages}">Next</span>
+
+			&nbsp;&nbsp;
+			<a th:if="${currentPage < totalPages}" th:href="@{'/drugs/page/' + ${totalPages}}">Last</a>
+			<span th:unless="${currentPage < totalPages}">Last</span>
+
+		</center>
+	</div>
+
+	<script type="text/javascript">
+    function clearFilter(){
+    window.location = '/drugs/list';
+    }
+</script>
+</body>
+</html>

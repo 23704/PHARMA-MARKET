@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Signup</title>
+	<style>
+		body {
+			background-image: url("https://www.shutterstock.com/image-vector/abstract-geometric-shape-medicine-science-260nw-767767987.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		form {
+			width: 50%;
+			margin: auto;
+			background-color: rgba(255, 255, 255, 0.7);
+			padding: 50px 30px;
+			box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+			border-radius: 10px;
+			text-align: center;
+		}
+		input[type=text], input[type=password], input[type=email] {
+			padding: 10px;
+			margin: 10px;
+			width: 80%;
+			border: none;
+			border-bottom: 1px solid #ccc;
+			font-size: 16px;
+			text-align: center;
+			background-color: transparent;
+			color: #555;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			transition: all 0.2s ease-in-out;
+		}
+		input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+			margin-top: -30px;
+		}
+		input[type=submit] {
+			background-color: #87CEFA;
+			color: #fff;
+			padding: 10px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+			display: block;
+			margin: auto;
+		}
+		h2 {
+			margin-top: 0;
+		}
+	</style>
+</head>
+<body>
+	<form  th:action="@{/pharmas/save}" th:object="${pharma}"  method="post">
+		<h2>Customer Signup</h2>
+		<input type="text" id="firstName" th:field="*{first_name}" placeholder="First Name" required>
+
+		<input type="text" id="lastName" th:field="*{last_name}" placeholder="Last Name" required>
+
+		<input type="email" id="email" th:field="*{email}" placeholder="Email" required>
+		<input type="password" id="password" th:field="*{password}" placeholder="Password" required>
+		<input type="password" id="confirmPassword"  placeholder="Confirm Password" required>
+		<br>
+		<input type="submit" value="Submit">
+		<p>Already have an account? <a th:href="@{/pharmas/loginDirector}">Log in</a></p>
+	</form>
+</body>
+</html>

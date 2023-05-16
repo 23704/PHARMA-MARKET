@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PHARMA-MARKET</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* CSS styles here */
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">PHARMA-MARKET</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link login-link"  th:href="@{/pharmas/loginDirector}">Login as Pharmacist</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link login-link" th:href="@{/pharmass/loginCustomer}">Login as Customer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link signup-link" th:href="@{/pharmas/registerDirector}">Signup as Pharmacist</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link signup-link" th:href="@{/pharmass/registerCustomer}">Signup as Customer</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <p class="welcome-msg">Welcome to our online pharmacy! We provide high-quality medications and healthcare products, all from the comfort of your own home. Our mission is to provide reliable, affordable, and accessible healthcare solutions. With our user-friendly interface and expert customer service team, we make your shopping experience easy and seamless. Thank you for choosing us!</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
